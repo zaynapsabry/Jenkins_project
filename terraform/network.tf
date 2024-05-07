@@ -1,5 +1,5 @@
 module "network" {
-  source = "network-module/"
+  source = "./network-module/"
   region = var.region
   vpc_cidr = var.vpc_cidr
   public_subnet_cidr = var.public_subnet_cidr
