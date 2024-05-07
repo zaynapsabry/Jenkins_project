@@ -11,6 +11,17 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/zaynapsabry/Jenkins_project'
             }
         }
+        
+        stage('Terraform Init') {
+            steps {
+                script {
+                    dir('terraform') {
+                        sh 'terraform init'
+                    }
+                }
+            }
+        }
+        
         stage('Check and Create Workspace') {
             steps {
                 script {
@@ -26,15 +37,7 @@ pipeline {
                 }
             }
         }
-        stage('Terraform Init') {
-            steps {
-                script {
-                    dir('terraform') {
-                        sh 'terraform init'
-                    }
-                }
-            }
-        }
+
         stage('Terraform Plan') {
             when {
                 expression {
@@ -60,16 +63,16 @@ pipeline {
                 }
             }
         }
-        stage('Terraform Apply') {
-            when {
-                expression {
-                    params.TERRAFORM_WORKSPACE != 'dev' && params.TERRAFORM_WORKSPACE != 'prod'
-                }
-            }
-            steps {
-                error("Invalid workspace chosen. Please choose either dev or prod.")
-            }
-        }
+        // stage('Terraform Apply') {
+        //     when {
+        //         expression {
+        //             params.TERRAFORM_WORKSPACE != 'dev' && params.TERRAFORM_WORKSPACE != 'prod'
+        //         }
+        //     }
+        //     steps {
+        //         error("Invalid workspace chosen. Please choose either dev or prod.")
+        //     }
+        // }
         // stage('Terraform Apply: ${params.TERRAFORM_WORKSPACE}') {
         //     when {
         //         expression {
