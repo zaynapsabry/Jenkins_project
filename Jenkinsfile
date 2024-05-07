@@ -63,7 +63,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Terraform Apply') {
             when {
                 expression {
@@ -89,5 +89,15 @@ pipeline {
                 }
             }
         }
+
+        // stage('destroy') {
+        //     steps {
+        //         script {
+        //             dir('Terraform') {
+        //                 sh "terraform destroy -auto-approve -var-file=${params.TERRAFORM_WORKSPACE}.tfvars"
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
