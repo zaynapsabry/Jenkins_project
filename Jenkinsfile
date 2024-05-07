@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/zaynapsabry/Jenkins_project.git'
+                git branch: 'main', url: 'https://github.com/zaynapsabry/Jenkins_project'
             }
         }
         stage('Check and Create Workspace') {
