@@ -63,30 +63,31 @@ pipeline {
                 }
             }
         }
-        // stage('Terraform Apply') {
-        //     when {
-        //         expression {
-        //             params.TERRAFORM_WORKSPACE != 'dev' && params.TERRAFORM_WORKSPACE != 'prod'
-        //         }
-        //     }
-        //     steps {
-        //         error("Invalid workspace chosen. Please choose either dev or prod.")
-        //     }
-        // }
-        // stage('Terraform Apply: ${params.TERRAFORM_WORKSPACE}') {
-        //     when {
-        //         expression {
-        //             params.TERRAFORM_WORKSPACE == 'dev' || params.TERRAFORM_WORKSPACE == 'prod'
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             dir('terraform') {
-        //                 sh "terraform workspace select ${params.TERRAFORM_WORKSPACE}"
-        //                 sh "terraform apply -auto-approve -var-file=${params.TERRAFORM_WORKSPACE}.tfvars"
-        //             }
-        //         }
-        //     }
-        // }
+        
+        stage('Terraform Apply') {
+            when {
+                expression {
+                    params.TERRAFORM_WORKSPACE != 'dev' && params.TERRAFORM_WORKSPACE != 'prod'
+                }
+            }
+            steps {
+                error("Invalid workspace chosen. Please choose either dev or prod.")
+            }
+        }
+        stage('Terraform Apply: ${params.TERRAFORM_WORKSPACE}') {
+            when {
+                expression {
+                    params.TERRAFORM_WORKSPACE == 'dev' || params.TERRAFORM_WORKSPACE == 'prod'
+                }
+            }
+            steps {
+                script {
+                    dir('terraform') {
+                        sh "terraform workspace select ${params.TERRAFORM_WORKSPACE}"
+                        sh "terraform apply -auto-approve -var-file=${params.TERRAFORM_WORKSPACE}.tfvars"
+                    }
+                }
+            }
+        }
     }
 }
