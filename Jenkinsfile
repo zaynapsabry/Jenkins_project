@@ -90,14 +90,14 @@ pipeline {
             }
         }
 
-        stage('destroy') {
-             steps {
-                 script {
-                     dir('Terraform') {
-                         sh "terraform destroy -auto-approve -var-file=${params.TERRAFORM_WORKSPACE}.tfvars"
-                     }
-                 }
-             }
-         }
+        // stage('destroy') {
+        //      steps {
+        //          script {
+        //              dir('Terraform') {
+        //                  sh "terraform destroy -auto-approve -var-file=${params.TERRAFORM_WORKSPACE}.tfvars"
+        //              }
+        //          }
+        //      }
+        //  }
     }
 }
