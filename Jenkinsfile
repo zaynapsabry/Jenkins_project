@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'ec2-node-slave'
+        label 'terraform-slave'
     }
     parameters {
         choice(name: 'TERRAFORM_WORKSPACE', choices: ['dev', 'prod'], description: 'Choose Terraform workspace: dev or prod')
