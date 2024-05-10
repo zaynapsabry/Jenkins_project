@@ -1,0 +1,75 @@
+---
+- hosts: all
+  name: Installing Docker playbook on private slave
+  remote_user: ubuntu
+  become: yes
+
+  tasks:
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+
+    - name: Create Jenkins directory if it doesn't exist
+      file:
+        path: /home/ubuntu/jenkins
+        state: directory
+        mode: '0777'
+
+    - name: Install OpenJDK
+      apt:
+        name: openjdk-11-jre  
+        state: present    
+
+    - name: Install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true    
+
+    - name: Import Docker GPG Key from Local File
+      apt_key:
+        data: "{{ lookup('file', '/home/zeinab/Downloads/Jenkins-Project-test/gpg') }}"
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+  
+    - name: Install Docker Module for Python
+      become: yes
+      apt:
+        name: python3-docker
+        state: present
+
+# Create jenkins user and add it ti docker group
+    - name: Add ubuntu user to docker group
+      user:
+        name: ubuntu  
+        groups: docker       
+        append: yes     
+
+    - name: Set permissions to 777 for the docker socket
+      file:
+        path: /var/run/docker.sock 
+        mode: '0777'    
+ 

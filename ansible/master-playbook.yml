@@ -1,0 +1,55 @@
+---
+- hosts: all
+  name: Installing Jenkins playbook on Master
+  remote_user: ubuntu
+  become: yes
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Download Jenkins release repository configuration
+      copy:
+        src: /home/zeinab/Downloads/Jenkins-Project-test/jenkins.io.key
+        dest: /tmp/jenkins.io.key
+
+    - name: Import Jenkins key
+      apt_key:
+        file: /tmp/jenkins.io.key
+
+    - name: Add Jenkins repository
+      apt_repository:
+        repo: deb https://pkg.jenkins.io/debian-stable binary/
+        state: present
+
+    - name: Update apt cache after adding repository
+      apt:
+        update_cache: yes
+
+    - name: Install Java
+      apt:
+        name: openjdk-17-jdk
+        state: present
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: latest
+
+    - name: Create jenkins user
+      user:
+        name: jenkins
+        shell: /bin/bash
+        system: yes
+
+    - name: Creates directory
+      file:
+        path: /home/ubuntu/jenkins
+        state: directory    
+
+    - name: Start Jenkins service
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
