@@ -1,6 +1,6 @@
 # Creating subnet groups
 resource "aws_elasticache_subnet_group" "elasticahe_subnet_group" {
-  name       = "mydb-subnet-group"
+  name       = "myredis-subnet-group"
   subnet_ids = [
     module.network.private-subnet-id-1,
     module.network.private-subnet-id-2
@@ -14,7 +14,7 @@ resource "aws_elasticache_subnet_group" "elasticahe_subnet_group" {
 # Create the ElastiCache cluster
 resource "aws_elasticache_cluster" "redis_cluster" {
   cluster_id           = "zeinab-redis-cluster"
-  engine               = "redis"  
+  engine               = "redis" 
   node_type            = "cache.t3.micro"  
   num_cache_nodes      = 1 
   parameter_group_name = "default.redis7"

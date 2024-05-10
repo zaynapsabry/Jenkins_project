@@ -8,9 +8,14 @@ output vpc-cidr{
     description = "vpc cider"
 }
 
-output public-subnet-id{
-    value = aws_subnet.zeinab-public-subnet.id
-    description = "public subnet id"
+output public-subnet-id-1{
+    value = aws_subnet.zeinab-public-subnet-1.id
+    description = "public subnet 1 id"
+}
+
+output public-subnet-id-2{
+    value = aws_subnet.zeinab-public-subnet-2.id
+    description = "public subnet 2 id"
 }
 
 output private-subnet-id-1{
@@ -21,4 +26,9 @@ output private-subnet-id-1{
 output private-subnet-id-2{
     value = aws_subnet.zeinab-private-subnet-2.id
     description = "private subnet 2 id"
+}
+
+output nat-gateway{
+    value = aws_nat_gateway.zeinab_ngw.id
+    description = "nat gateway"
 }

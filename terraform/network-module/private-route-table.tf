@@ -2,6 +2,11 @@
 resource "aws_route_table" "zeinab-private-rt-1" {
   vpc_id = aws_vpc.zeinab-vpc.id
 
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.zeinab_ngw.id
+  }
+
   tags = {
     Name = "${var.tag_name}-private-route-table-1"
   }
@@ -17,6 +22,11 @@ resource "aws_route_table_association" "private_subnet_asso_1" {
 # create private route table
 resource "aws_route_table" "zeinab-private-rt-2" {
   vpc_id = aws_vpc.zeinab-vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.zeinab_ngw.id
+  }
 
   tags = {
     Name = "${var.tag_name}-private-route-table-2"

@@ -19,7 +19,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "zeinab-bastion" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
-  subnet_id     = module.network.public-subnet-id
+  subnet_id     = module.network.public-subnet-id-1
   security_groups = [aws_security_group.zeinab-security-group1.id]
   key_name =  aws_key_pair.zeinab-public-key.key_name
   depends_on = [ local_file.private_key_file ]

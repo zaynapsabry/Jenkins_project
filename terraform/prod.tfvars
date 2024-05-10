@@ -1,6 +1,7 @@
 region = "eu-east-1"
 vpc_cidr = "172.168.0.0/16"
-public_subnet_cidr = "172.168.2.0/24"
+public_subnet_cidr_1 = "172.168.2.0/24"
+public_subnet_cidr_2 = "172.168.5.0/24"
 private_subnet_cidr_1 = "172.186.3.0/24"
 private_subnet_cidr_2 = "172.186.1.0/24"
 instance_type = "t2.micro"

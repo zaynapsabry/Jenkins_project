@@ -1,3 +1,5 @@
 .terraform.lock.hcl
 .terraform
 public_ips.txt
+rds-password.txt
+zeinab-private-key.pem

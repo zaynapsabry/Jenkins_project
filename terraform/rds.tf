@@ -2,8 +2,9 @@
 resource "random_password" "password" {
   length           = 16
   special          = true
-  override_special = "%@"
+  # override_special = "%@"
 }
+
 
 # Creating subnet groups
 resource "aws_db_subnet_group" "mydb_subnet_group" {
@@ -19,7 +20,7 @@ resource "aws_db_subnet_group" "mydb_subnet_group" {
 }
 
 # Creating rds
-resource "aws_db_instance" "default" {
+resource "aws_db_instance" "zeinab-rds" {
   allocated_storage    = 10
   db_name              = "mydb"
   engine               = "mysql"
@@ -33,4 +34,10 @@ resource "aws_db_instance" "default" {
   db_subnet_group_name = aws_db_subnet_group.mydb_subnet_group.name
   vpc_security_group_ids = [aws_security_group.zeinab-security-group2.id]
   skip_final_snapshot  = true
+}
+
+# Getting rds password
+resource "local_file" "rds_password_file" {
+  filename = "${path.module}/rds-password.txt"
+  content  = aws_db_instance.zeinab-rds.password
 }

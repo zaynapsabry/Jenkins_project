@@ -15,6 +15,6 @@ resource "aws_route_table" "zeinab-public-rt" {
 
 # assign public subnet to public route table
 resource "aws_route_table_association" "public_subnet_asso" {
- subnet_id      = aws_subnet.zeinab-public-subnet.id
+ subnet_id      = aws_subnet.zeinab-public-subnet-1.id
  route_table_id = aws_route_table.zeinab-public-rt.id
 }

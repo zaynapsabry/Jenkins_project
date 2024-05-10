@@ -1,10 +1,35 @@
-# 7- create security group which allow ssh from 0.0.0.0/0
+# 7- create security group which allow ssh, http, https from 0.0.0.0/0
 resource "aws_security_group" "zeinab-security-group1" {
   name        = "${var.tag_name}-security-group1"
   description = "Allow SSH inbound traffic and all outbound traffic"
   vpc_id      = module.network.vpc-id
 
   ingress {
+    description = "SSH ingress"
+    from_port        = var.port_number1
+    to_port          = var.port_number1
+    protocol         = var.protocol
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTP ingress"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS ingress"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "SSH egress"
     from_port        = var.port_number1
     to_port          = var.port_number1
     protocol         = var.protocol
@@ -12,10 +37,19 @@ resource "aws_security_group" "zeinab-security-group1" {
   }
 
   egress {
-    from_port        = var.port_number1
-    to_port          = var.port_number1
-    protocol         = var.protocol
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "HTTP egress"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "HTTPS egress"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -30,6 +64,7 @@ resource "aws_security_group" "zeinab-security-group2" {
   vpc_id      = module.network.vpc-id
 
   ingress {
+    description = "SSH ingress"
     from_port        = var.port_number1
     to_port          = var.port_number1
     protocol         = var.protocol
@@ -37,10 +72,43 @@ resource "aws_security_group" "zeinab-security-group2" {
   }
 
    ingress {
+    description = "3000 ingress"
     from_port        = var.port_number2
     to_port          = var.port_number2
     protocol         = var.protocol
     cidr_blocks      = [module.network.vpc-cidr]
+  }
+
+    ingress {
+    description = "HTTP ingress"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS ingress"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "HTTP egress"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "HTTPS egress"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
